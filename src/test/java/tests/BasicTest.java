@@ -8,35 +8,37 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import pages.NavPage;
+
 
 import java.time.Duration;
 
-public class BasicTest {
+public abstract class BasicTest {
     protected WebDriver driver;
     protected WebDriverWait wait;
-    protected String baseUrl = "https://vue-demo.daniel-avellaneda.com/";
+    protected String baseUrl = "https://vue-demo.daniel-avellaneda.com";
+    protected NavPage navPage;
 
     @BeforeClass
     public void setup() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        navPage = new NavPage(driver, wait);
     }
-
     @BeforeMethod
-    public void beforeMethod() {
+    public void beforMethod(){
         driver.navigate().to(baseUrl);
     }
-
     @AfterMethod
-    public void afterMethod() {
+    public void afterMethod () {
         driver.manage().deleteAllCookies();
     }
-
     @AfterClass
-    public void afterClass() {
+    public void afterClass(){
         driver.quit();
     }
 }
