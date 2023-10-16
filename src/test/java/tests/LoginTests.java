@@ -6,20 +6,38 @@ import retryAnalyzer.RetryAnalyzer;
 
 public class LoginTests extends BasicTest {
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class)
-    public void visitsTheHomePage(){
+    public void visitsTheHomePage() {
         navPage.clickOnLanguageButton();
         navPage.clickOnEnglishLanguage();
         navPage.clickOnLoginButton();
         Assert.assertEquals(driver.getCurrentUrl(),
                 baseUrl + "/login");
     }
-    @Test (priority = 2, retryAnalyzer = RetryAnalyzer.class)
-    public void checksInputTypes(){
+
+    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class)
+    public void checksInputTypes() {
         navPage.clickOnLoginButton();
         String attributeEmail = loginPage.getEmailInput().getAttribute("type");
-        String attributePassword =loginPage.getPasswordInput().getAttribute("type");
-        Assert.assertEquals(attributeEmail, "email", "The password field should have the value \"email\" in the \"type\" attribute." );
+        String attributePassword = loginPage.getPasswordInput().getAttribute("type");
+        Assert.assertEquals(attributeEmail, "email", "The email field should have the value \"email\" in the \"type\" attribute.");
         Assert.assertEquals(attributePassword, "password", "The password field should have the value \"password\" in the \"type\" attribute.");
 
     }
+    @Test (priority = 3, retryAnalyzer = RetryAnalyzer.class)
+    public void displaysErrorsWhenUserDoesNotExist() {
+        navPage.clickOnLoginButton();
+
+        loginPage.getEmailInput().sendKeys("non-existing-user@gmail.com");
+        loginPage.getPasswordInput().sendKeys("password123");
+
+        loginPage.clickOnLoginButton();
+
+        loginPage.waitForErrorPopupToBeVisible();
+
+        String errorMessage = loginPage.getErrorMessage();
+        Assert.assertTrue(errorMessage.contains("User does not exists"));
+
+        String currentUrl = driver.getCurrentUrl();
+        Assert.assertEquals(currentUrl, baseUrl + "/login");
     }
+}
