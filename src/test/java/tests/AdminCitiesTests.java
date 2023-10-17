@@ -8,7 +8,6 @@ import retryAnalyzer.RetryAnalyzer;
 import java.util.List;
 
 public class AdminCitiesTests extends BasicTest {
-
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class)
     public void visitsAdminCitiesPageAndListCities() throws InterruptedException {
 
@@ -45,6 +44,28 @@ public class AdminCitiesTests extends BasicTest {
         citiesPage.waitForCreateEditCityDialogToAppear();
 
         citiesPage.enterCityName("New York City");
+
+        citiesPage.clickOnSaveButton();
+
+        messagePopUpPage.waitForMessagePopupToBeVisible();
+
+        Assert.assertTrue(citiesPage.getMessagePopupText().contains("Saved successfully"));
+    }
+    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class)
+    public void editCity() throws InterruptedException {
+
+        navPage.clickOnAdminButton();
+
+        citiesPage.clickOnCitiesButton();
+
+
+        citiesPage.searchCityName("New York City");
+
+        citiesPage.waitForNumberOfRowsInTableToBe(1);
+
+        citiesPage.clickOnEditButtonForFirstRow();
+
+        citiesPage.enterCityName("Nis");
 
         citiesPage.clickOnSaveButton();
 

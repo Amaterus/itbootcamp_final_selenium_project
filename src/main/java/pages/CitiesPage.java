@@ -1,13 +1,14 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.time.Duration;
-import java.util.Collection;
 import java.util.List;
 
 public class CitiesPage extends BasicPage {
@@ -33,10 +34,11 @@ public class CitiesPage extends BasicPage {
     }
 
     public void enterCityName(String cityName) {
-        WebElement cityInputField = driver.findElement(By.cssSelector("#name"));
-        cityInputField.sendKeys(cityName);
+        WebElement cityNameInput = driver.findElement(By.xpath("//*[@id=\"name\"]"));
+        cityNameInput.sendKeys(Keys.CONTROL + "a");
+        cityNameInput.sendKeys(Keys.DELETE);
+        cityNameInput.sendKeys(cityName);
     }
-
     public void clickOnSaveButton() {
         driver.findElement(By.cssSelector("div.v-card__actions > button.btnSave")).click();
     }
@@ -44,5 +46,17 @@ public class CitiesPage extends BasicPage {
     public String getMessagePopupText() {
         WebElement messagePopup = driver.findElement(By.cssSelector(".success .v-snack__content"));
         return messagePopup.getText();
+    }
+    public void searchCityName(String cityName) {
+        WebElement cityInputField = driver.findElement(By.cssSelector("#search"));
+        cityInputField.sendKeys(cityName);
+    }
+    public void waitForNumberOfRowsInTableToBe(int expectedNumberOfRows) {
+        List<WebElement> rows = driver.findElements(By.cssSelector(".v-data-table__wrapper tbody tr"));
+        Assert.assertEquals(rows.size(), expectedNumberOfRows);
+    }
+
+    public void clickOnEditButtonForFirstRow() {
+        driver.findElement(By.cssSelector("#edit")).click();
     }
 }
