@@ -34,9 +34,9 @@ public class LoginTests extends BasicTest {
 
         loginPage.autoLogin(email, password);
 
-        loginPage.waitForErrorPopupToBeVisible();
+        messagePopUpPage.waitForErrorPopupToBeVisible();
 
-        String errorMessage = loginPage.getErrorMessage();
+        String errorMessage = messagePopUpPage.getErrorMessage();
         assertTrue(errorMessage.contains("User does not exists"));
 
         String currentUrl = driver.getCurrentUrl();
@@ -49,9 +49,9 @@ public class LoginTests extends BasicTest {
 
         loginPage.autoLogin(email, password);
 
-        loginPage.waitForErrorPopupToBeVisible();
+        messagePopUpPage.waitForErrorPopupToBeVisible();
 
-        String errorMessage = loginPage.getErrorMessage();
+        String errorMessage = messagePopUpPage.getErrorMessage();
         Assert.assertEquals(errorMessage, "Wrong password", "Message from popup should be contains \"Wrong password\"" );
 
         Assert.assertEquals(driver.getCurrentUrl(), baseUrl + "/login", "Urls should be similar.");

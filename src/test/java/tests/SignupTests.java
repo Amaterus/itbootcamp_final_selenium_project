@@ -46,4 +46,22 @@ public class SignupTests extends BasicTest{
 
         Assert.assertEquals(driver.getCurrentUrl(), baseUrl + "/signup");
     }
+    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class)
+    public void signup() throws InterruptedException {
+        navPage.clickOnSignUpButton();
+
+        wait
+                .until(ExpectedConditions.titleContains("Signup - My Awesome App"));
+
+        signupPage.fillSignUpFormWithData("Veljko Andjelkovic", "veljko1@gmail.com", "12345", "12345");
+        signupPage.clickOnSignUpButton();
+
+        wait
+                .until(ExpectedConditions.titleContains("Protected Home - My Awesome App"));
+
+        Assert.assertEquals(messagePopUpPage.getVerifyPopupMessage(), "IMPORTANT: Verify your account");
+
+        messagePopUpPage.clickOnCloseButton();
+        navPage.clickOnLogoutButton();
+    }
 }
