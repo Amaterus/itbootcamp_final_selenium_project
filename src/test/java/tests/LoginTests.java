@@ -3,7 +3,10 @@ package tests;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.LoginPage;
 import retryAnalyzer.RetryAnalyzer;
+
+import static org.testng.Assert.assertTrue;
 
 public class LoginTests extends BasicTest {
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class)
@@ -26,17 +29,15 @@ public class LoginTests extends BasicTest {
     }
     @Test (priority = 3, retryAnalyzer = RetryAnalyzer.class)
     public void displaysErrorsWhenUserDoesNotExist() {
-        navPage.clickOnLoginButton();
+        String email = "non-existing-user@gmail.com";
+        String password = "password123";
 
-        loginPage.getEmailInput().sendKeys("non-existing-user@gmail.com");
-        loginPage.getPasswordInput().sendKeys("password123");
-
-        loginPage.clickOnLoginButton();
+        loginPage.autoLogin(email, password);
 
         loginPage.waitForErrorPopupToBeVisible();
 
         String errorMessage = loginPage.getErrorMessage();
-        Assert.assertTrue(errorMessage.contains("User does not exists"));
+        assertTrue(errorMessage.contains("User does not exists"));
 
         String currentUrl = driver.getCurrentUrl();
         Assert.assertEquals(currentUrl, baseUrl + "/login");
@@ -45,11 +46,9 @@ public class LoginTests extends BasicTest {
     public void displaysErrorsWhenPasswordIsWrong(){
         String email = "admin@admin.com";
         String password = "password123";
-        navPage.clickOnLoginButton();
 
-        loginPage.getEmailInput().sendKeys(email);
-        loginPage.getPasswordInput().sendKeys(password);
-        loginPage.clickOnLoginButton();
+        loginPage.autoLogin(email, password);
+
         loginPage.waitForErrorPopupToBeVisible();
 
         String errorMessage = loginPage.getErrorMessage();
@@ -62,13 +61,16 @@ public class LoginTests extends BasicTest {
         String email = "admin@admin.com";
         String password = "12345";
 
-        navPage.clickOnLoginButton();
+        loginPage.autoLogin(email, password);
 
-        loginPage.getEmailInput().sendKeys(email);
-        loginPage.getPasswordInput().sendKeys(password);
-        loginPage.clickOnLoginButton();
         wait
                 .withMessage("Url should be for home page.")
                 .until(ExpectedConditions.urlToBe(baseUrl + "/home"));
+    }
+    @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class)
+    public void logout() {
+
+        navPage.waitUntilLogoutButtonIsVisible();
+        navPage.clickOnLogoutButton();
     }
 }
