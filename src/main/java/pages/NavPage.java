@@ -24,7 +24,7 @@ public class NavPage extends BasicPage{
     public WebElement getLoginButton () {
         return driver.findElement(By.cssSelector(" div.v-toolbar__items > a:nth-child(3) > span"));
     }
-    public void clickOnLoginButton () {
+    public void clickOnLoginButton() {
         getLoginButton().click();
     }
 }
