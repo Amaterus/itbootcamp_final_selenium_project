@@ -86,4 +86,27 @@ public class AdminCitiesTests extends BasicTest {
         String actualCityName = citiesPage.getFirstRowName();
         Assert.assertEquals("Nis", actualCityName);
     }
+    @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class)
+    public void deleteCity() throws InterruptedException {
+
+        navPage.clickOnAdminButton();
+
+        citiesPage.clickOnCitiesButton();
+
+        citiesPage.searchCityName("Nis");
+
+        citiesPage.waitForNumberOfRowsInTableToBe(1);
+
+        String actualCityName = citiesPage.getFirstRowName();
+        Assert.assertEquals("Nis", actualCityName);
+
+        citiesPage.clickOnDeleteButtonForFirstRow();
+
+        citiesPage.waitForDeleteDialogToBeVisible();
+
+        citiesPage.clickDeleteButtonInDialog();
+
+        messagePopUpPage.waitForMessagePopupToBeVisible();
+        Assert.assertTrue(messagePopUpPage.getMessagePopupText().contains("Deleted successfully"));
+    }
 }

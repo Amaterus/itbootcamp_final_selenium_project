@@ -65,4 +65,21 @@ public class CitiesPage extends BasicPage {
         WebElement nameElement = firstRow.findElement(By.cssSelector("tbody > tr > td:nth-child(2)"));
         return nameElement.getText();
     }
+
+    public void clickOnDeleteButtonForFirstRow() {
+        WebElement firstRow = driver.findElement(By.cssSelector(".v-data-table__wrapper tbody tr:first-child"));
+        WebElement deleteButton = firstRow.findElement(By.cssSelector("#delete"));
+        deleteButton.click();
+    }
+
+    public void waitForDeleteDialogToBeVisible() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement deleteDialog = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'v-dialog--active')]")));
+    }
+
+    public void clickDeleteButtonInDialog() {
+        WebElement deleteButton = driver.findElement(By.cssSelector(".v-dialog__content--active button.text--lighten3"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(deleteButton)).click();
+    }
 }
