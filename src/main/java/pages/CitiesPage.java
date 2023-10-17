@@ -40,4 +40,9 @@ public class CitiesPage extends BasicPage {
     public void clickOnSaveButton() {
         driver.findElement(By.cssSelector("div.v-card__actions > button.btnSave")).click();
     }
+
+    public String getMessagePopupText() {
+        WebElement messagePopup = driver.findElement(By.cssSelector(".success .v-snack__content"));
+        return messagePopup.getText();
+    }
 }

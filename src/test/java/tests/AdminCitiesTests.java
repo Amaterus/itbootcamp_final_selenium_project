@@ -38,7 +38,6 @@ public class AdminCitiesTests extends BasicTest {
 //        loginPage.autoLogin("admin@admin.com", "12345");
         navPage.clickOnAdminButton();
 
-
         citiesPage.clickOnCitiesButton();
 
         citiesPage.clickOnNewItemButton();
@@ -51,7 +50,6 @@ public class AdminCitiesTests extends BasicTest {
 
         messagePopUpPage.waitForMessagePopupToBeVisible();
 
-        WebElement cityInputField = citiesPage.getCityInputField();
-        Assert.assertEquals(cityInputField.getAttribute("type"), "text");
+        Assert.assertTrue(citiesPage.getMessagePopupText().contains("Saved successfully"));
     }
 }
