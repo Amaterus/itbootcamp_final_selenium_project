@@ -43,4 +43,8 @@ public class NavPage extends BasicPage{
     public void clickOnSignUpButton() {
         driver.findElement(By.cssSelector(".v-toolbar__items > a:nth-child(4)")).click();
     }
+
+    public void clickOnAdminButton() {
+        driver.findElement(By.className("btnAdmin")).click();
+    }
 }
