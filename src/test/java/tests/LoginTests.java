@@ -1,5 +1,6 @@
 package tests;
 
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import retryAnalyzer.RetryAnalyzer;
@@ -55,5 +56,19 @@ public class LoginTests extends BasicTest {
         Assert.assertEquals(errorMessage, "Wrong password", "Message from popup should be contains \"Wrong password\"" );
 
         Assert.assertEquals(driver.getCurrentUrl(), baseUrl + "/login", "Urls should be similar.");
+    }
+    @Test (priority = 5, retryAnalyzer = RetryAnalyzer.class)
+    public void correctLogin(){
+        String email = "admin@admin.com";
+        String password = "12345";
+
+        navPage.clickOnLoginButton();
+
+        loginPage.getEmailInput().sendKeys(email);
+        loginPage.getPasswordInput().sendKeys(password);
+        loginPage.clickOnLoginButton();
+        wait
+                .withMessage("Url should be for home page.")
+                .until(ExpectedConditions.urlToBe(baseUrl + "/home"));
     }
 }
