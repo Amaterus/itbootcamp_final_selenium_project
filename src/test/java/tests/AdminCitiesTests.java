@@ -73,4 +73,17 @@ public class AdminCitiesTests extends BasicTest {
 
         Assert.assertTrue(citiesPage.getMessagePopupText().contains("Saved successfully"));
     }
+    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class)
+    public void searchCity() throws InterruptedException {
+        navPage.clickOnAdminButton();
+
+        citiesPage.clickOnCitiesButton();
+
+        citiesPage.searchCityName("Nis");
+
+        citiesPage.waitForNumberOfRowsInTableToBe(1);
+
+        String actualCityName = citiesPage.getFirstRowName();
+        Assert.assertEquals("Nis", actualCityName);
+    }
 }
