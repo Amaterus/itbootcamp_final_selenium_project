@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class NavPage extends BasicPage{
     public NavPage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
@@ -47,4 +49,26 @@ public class NavPage extends BasicPage{
     public void clickOnAdminButton() {
         driver.findElement(By.className("btnAdmin")).click();
     }
+    public WebElement getSpanishLanguageInMenuList () {
+        return driver.findElement(By.cssSelector("span.f-es"));
+    }
+    public void clickOnSpanishLanguageInMenuList () {
+        getSpanishLanguageInMenuList().click();
+    }
+    public WebElement getHeader () {
+        return driver.findElement(By.cssSelector("h1.display-2"));
+    }
+    public String getHeaderText () {
+        return getHeader().getText();
+    }
+
+    public void clickOnLanguageMenuButton() {
+        driver.findElement(By.cssSelector("div.v-toolbar__items > button")).click();
+    }
+
+    public void waitUntilLanguageListIsVisible() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[2]/div")));
+    }
+
 }
