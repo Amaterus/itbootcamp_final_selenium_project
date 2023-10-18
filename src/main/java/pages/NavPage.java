@@ -49,11 +49,8 @@ public class NavPage extends BasicPage{
     public void clickOnAdminButton() {
         driver.findElement(By.className("btnAdmin")).click();
     }
-    public WebElement getSpanishLanguageInMenuList () {
-        return driver.findElement(By.cssSelector("span.f-es"));
-    }
     public void clickOnSpanishLanguageInMenuList () {
-        getSpanishLanguageInMenuList().click();
+        driver.findElement(By.cssSelector("span.f-es")).click();
     }
     public WebElement getHeader () {
         return driver.findElement(By.cssSelector("h1.display-2"));
@@ -71,4 +68,7 @@ public class NavPage extends BasicPage{
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[2]/div")));
     }
 
+    public void clickOnEnglishLanguageInMenuList() {
+        driver.findElement(By.cssSelector("span.f-gb")).click();
+    }
 }
