@@ -10,11 +10,36 @@ public class ProfileTests extends BasicTest{
 
         loginPage.autoLogin("admin@admin.com", "12345");
 
-        profilePage.clickOnProfileButton();
+        navPage.clickOnProfileButton();
 
         Assert.assertTrue(driver.getCurrentUrl().contains("/profile"));
 
         profilePage.verifyEmailFieldValue();
+
+        navPage.clickOnLogoutButton();
+    }
+    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class)
+    public void visitsProfilePageAndVerifyInputTypes() throws InterruptedException {
+        navPage.clickOnLoginButton();
+
+        loginPage.autoLogin("admin@admin.com", "12345");
+
+        navPage.clickOnProfileButton();
+
+        profilePage.verifyAttribute("email", "type", "email");
+        profilePage.verifyAttribute("email", "disabled", "true");
+
+        profilePage.verifyAttribute("name", "type", "text");
+
+        profilePage.verifyAttribute("city", "type", "text");
+
+        profilePage.verifyAttribute("country", "type", "text");
+
+        profilePage.verifyAttribute("urlTwitter", "type", "url");
+
+        profilePage.verifyAttribute("urlGitHub", "type", "url");
+
+        profilePage.verifyAttribute("phone", "type", "tel");
 
         navPage.clickOnLogoutButton();
     }

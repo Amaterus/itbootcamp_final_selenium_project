@@ -79,4 +79,7 @@ public class NavPage extends BasicPage{
     public void clickOnFrenchLanguageInMenuList() {
         driver.findElement(By.cssSelector("span.f-fr")).click();
     }
+    public void clickOnProfileButton() {
+        driver.findElement(By.cssSelector("a.btnProfile")).click();
+    }
 }
