@@ -42,4 +42,15 @@ public class MessagePopUpPage extends BasicPage {
         WebElement messagePopup = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]"));
         return messagePopup.getText();
     }
+    public void waitUntilPopUpMessageForSuccessfulProfileUpdateIsVisible () {
+        wait
+                .withMessage("Pop-up message for successful profile update should be visible.")
+                .until(ExpectedConditions.visibilityOf(getPopUpMessageForSuccessfulActions()));
+    }
+    public boolean getTextFromPopUpMessageForSuccessfulProfileUpdate () {
+        return getPopUpMessageForSuccessfulActions().getText().contains("Profile saved successfuly");
+    }
+    public WebElement getPopUpMessageForSuccessfulActions() {
+        return driver.findElement(By.cssSelector(".success .v-snack__content"));
+    }
 }
